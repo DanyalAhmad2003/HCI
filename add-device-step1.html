@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>EcoBin – Add Device (1)</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <header><h1>Adding a new device into the EcoBin system wizard</h1></header>
+  <main>
+    <form id="step1" action="add-device-step2.html" method="get">
+      <p>What materials is the device made out of?</p>
+      <label><input type="checkbox" name="material" value="Plastics"> Plastics</label><br>
+      <label><input type="checkbox" name="material" value="Metals"> Metals</label><br>
+      <label><input type="checkbox" name="material" value="Glass"> Glass</label><br>
+      <label><input type="checkbox" name="material" value="Other"> Other</label><br>
+      <textarea name="otherMaterial" placeholder="Write your response" rows="3" style="width:100%;"></textarea>
+      <button type="submit" class="btn">Next →</button>
+    </form>
+  </main>
+  <a href="business.html" class="back-btn">← Back</a>
+
+  <script>
+    document.getElementById('step1').addEventListener('submit', e => {
+      e.preventDefault();
+      // grab checked materials
+      const mats = Array.from(document.querySelectorAll('input[name="material"]:checked'))
+                        .map(cb => cb.value);
+      const other = document.querySelector('textarea[name="otherMaterial"]').value.trim();
+      if (other) mats.push(other);
+      localStorage.setItem('ecoMaterials', JSON.stringify(mats));
+      // go to next step
+      window.location = e.target.action;
+    });
+  </script>
+</body>
+</html>

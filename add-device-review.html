@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>EcoBin – Review & Submit</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <header><h1>Adding a new device into the EcoBin system wizard</h1></header>
+  <main>
+    <div id="review"></div>
+    <form id="submitReview" action="add-device-step5.html" method="get">
+      <button type="submit" class="btn">Submit</button>
+    </form>
+  </main>
+  <a href="add-device-step3.html" class="back-btn">← Back</a>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const reviewEl = document.getElementById('review');
+      const mats   = JSON.parse(localStorage.getItem('ecoMaterials') || '[]');
+      const hzds   = JSON.parse(localStorage.getItem('ecoHazards')   || '[]');
+      const name   = localStorage.getItem('ecoDeviceName') || '';
+      reviewEl.innerHTML = `
+        <p>Please review the recycling information regarding your new device:</p>
+        <p><strong>Name:</strong> ${name}</p>
+        <p><strong>Made out with:</strong> ${mats.join(', ')}</p>
+        <p><strong>Hazardous materials:</strong> ${hzds.join(', ')}</p>
+      `;
+    });
+
+    document.getElementById('submitReview').addEventListener('submit', e => {
+      e.preventDefault();
+      // clear storage
+      localStorage.removeItem('ecoMaterials');
+      localStorage.removeItem('ecoHazards');
+      localStorage.removeItem('ecoDeviceName');
+      // go to Finish
+      window.location = e.target.action;
+    });
+  </script>
+</body>
+</html>

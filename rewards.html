@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>EcoBin – My Rewards</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <header><h1>EcoBin Rewards</h1></header>
+
+  <main>
+    <div class="highlight">
+      <p>Your rewards balance: <strong>7,440 points</strong></p>
+      <div class="menu">
+        <button class="btn reward-item"
+                data-name="Apple App Store $10 Gift Card"
+                data-cost="6000"
+                data-code="EcoBinReward1">
+          Apple App Store $10 Gift Card – 6,000 pts
+        </button>
+
+        <button class="btn reward-item"
+                data-name="DoorDash 10% Discount"
+                data-cost="1000"
+                data-code="EcoBinReward2">
+          DoorDash 10% Discount – 1,000 pts
+        </button>
+
+        <button class="btn reward-item"
+                data-name="Best Buy 15% Discount"
+                data-cost="8000"
+                data-code="EcoBinReward3">
+          Best Buy 15% Discount – 8,000 pts
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <a href="index.html" class="back-btn">← Back to Menu</a>
+
+  <script>
+    document.querySelectorAll('.reward-item').forEach(btn => {
+      btn.addEventListener('click', () => {
+        // store selection
+        sessionStorage.setItem('selName', btn.dataset.name);
+        sessionStorage.setItem('selCost', btn.dataset.cost);
+        sessionStorage.setItem('selCode', btn.dataset.code);
+        // go to confirmation
+        location.href = 'rewards-confirm.html';
+      });
+    });
+  </script>
+</body>
+</html>

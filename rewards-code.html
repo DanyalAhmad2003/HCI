@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>EcoBin – Your Code</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <header><h1>EcoBin Rewards</h1></header>
+
+  <main>
+    <div class="highlight" style="text-align:center;">
+      <p id="name-out"></p>
+      <p>Here is your code:</p>
+      <div style="
+        display:inline-block;
+        padding:.75rem 1.5rem;
+        border-radius:.5rem;
+        background:#111;
+        color:#C8102E;
+        font-family:monospace;
+        margin-top:1rem;
+      " id="code-out"></div>
+    </div>
+  </main>
+
+  <a href="index.html" class="back-btn">← Back to Menu</a>
+
+  <script>
+    const name = sessionStorage.getItem('selName') || '';
+    const code = sessionStorage.getItem('selCode') || '';
+    document.getElementById('name-out').textContent = name;
+    document.getElementById('code-out').textContent = code;
+    // clear out selection
+    sessionStorage.removeItem('selName');
+    sessionStorage.removeItem('selCost');
+    sessionStorage.removeItem('selCode');
+  </script>
+</body>
+</html>

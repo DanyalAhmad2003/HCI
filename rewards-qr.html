@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>EcoBin – QR Code</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <header><h1>EcoBin Rewards</h1></header>
+
+  <main style="text-align:center;">
+    <div class="highlight">
+      <p>Congratulations!</p>
+      <!-- placeholder QR: swap for real if you like -->
+      <img src="https://via.placeholder.com/180?text=QR+Code" 
+           alt="Your Reward QR" style="margin:1rem 0;">
+      <p>Scan your QR code or:</p>
+      <button class="btn" id="get-code">Get Code</button>
+    </div>
+  </main>
+
+  <a href="rewards-confirm.html" class="back-btn">← Back</a>
+
+  <script>
+    document.getElementById('get-code').addEventListener('click', () => {
+      location.href = 'rewards-code.html';
+    });
+  </script>
+</body>
+</html>

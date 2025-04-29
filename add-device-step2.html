@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>EcoBin – Add Device (2)</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <header><h1>Adding a new device into the EcoBin system wizard</h1></header>
+  <main>
+    <form id="step2" action="add-device-step3.html" method="get">
+      <p>Are there any hazardous materials?</p>
+      <label><input type="checkbox" name="hazard" value="Battery"> Battery</label><br>
+      <label><input type="checkbox" name="hazard" value="Heavy Metal"> Heavy Metal</label><br>
+      <label><input type="checkbox" name="hazard" value="Other"> Other</label><br>
+      <textarea name="otherHazard" placeholder="Write your response" rows="3" style="width:100%;"></textarea>
+      <button type="submit" class="btn">Next →</button>
+    </form>
+  </main>
+  <a href="add-device-step1.html" class="back-btn">← Back</a>
+
+  <script>
+    document.getElementById('step2').addEventListener('submit', e => {
+      e.preventDefault();
+      const hz = Array.from(document.querySelectorAll('input[name="hazard"]:checked'))
+                      .map(cb => cb.value);
+      const other = document.querySelector('textarea[name="otherHazard"]').value.trim();
+      if (other) hz.push(other);
+      localStorage.setItem('ecoHazards', JSON.stringify(hz));
+      window.location = e.target.action;
+    });
+  </script>
+</body>
+</html>

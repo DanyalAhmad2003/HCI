@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>EcoBin – Confirm Redemption</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <header><h1>EcoBin Rewards</h1></header>
+
+  <main>
+    <div class="highlight" id="confirm-box">
+      <p>You are about to spend:</p>
+      <p><strong id="cost-display">– pts</strong></p>
+      <p id="name-display"></p>
+      <button class="btn" id="accept-btn">Accept</button>
+    </div>
+  </main>
+
+  <a href="rewards.html" class="back-btn">← Back</a>
+
+  <script>
+    // populate values
+    const name = sessionStorage.getItem('selName') || '';
+    const cost = sessionStorage.getItem('selCost') || '';
+    document.getElementById('name-display').textContent = name;
+    document.getElementById('cost-display').textContent = cost + ' points';
+
+    document.getElementById('accept-btn').addEventListener('click', () => {
+      location.href = 'rewards-qr.html';
+    });
+  </script>
+</body>
+</html>

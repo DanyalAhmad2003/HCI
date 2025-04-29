@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>EcoBin – Add Device (3)</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <header><h1>Adding a new device into the EcoBin system wizard</h1></header>
+  <main>
+    <form id="step3" action="add-device-review.html" method="get">
+      <p>What is the name of your device?</p>
+      <input type="text" name="deviceName" placeholder="Write your response" required
+             style="width:100%; padding:0.5rem;"/>
+      <button type="submit" class="btn">Next →</button>
+    </form>
+  </main>
+  <a href="add-device-step2.html" class="back-btn">← Back</a>
+
+  <script>
+    document.getElementById('step3').addEventListener('submit', e => {
+      e.preventDefault();
+      const name = e.target.deviceName.value.trim();
+      localStorage.setItem('ecoDeviceName', name);
+      window.location = e.target.action;
+    });
+  </script>
+</body>
+</html>
