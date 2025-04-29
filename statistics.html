@@ -6,11 +6,11 @@
   <title>EcoBin – Statistics</title>
   <link rel="stylesheet" href="css/styles.css" />
 
-  <!-- Chart.js for the bar chart -->
+  
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <style>
-    /* quick tweaks for this page */
+   
     .stats-cards {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -41,7 +41,7 @@
   </style>
 </head>
 <body>
-  <!-- page header -->
+ 
   <div class="glow-box" style="margin-top:2rem;">
     <header><h1>EcoBin Business</h1></header>
   </div>
@@ -50,7 +50,6 @@
     <div class="highlight">
       <h2>Statistics</h2>
 
-      <!-- KPI cards -->
       <div class="stats-cards">
         <div class="card">
           <h3>Devices Recycled</h3>
@@ -71,20 +70,19 @@
       </div>
     </div>
 
-    <!-- Bar chart -->
+    
     <div class="highlight" style="text-align:center;">
       <h3>Recycled Devices by Category</h3>
       <canvas id="recycleChart"></canvas>
     </div>
 
-    <!-- Next/Back controls -->
     <button class="btn" style="margin-top:1rem;" onclick="location.href='business.html'">
       ← Back to Business
     </button>
   </main>
 
   <script>
-    // sample data
+    
     const data = {
       labels: ['Phones','Laptops','Tablets','Cameras','Others'],
       datasets: [{
@@ -120,7 +118,7 @@
       }
     };
 
-    // render chart
+    
     new Chart(
       document.getElementById('recycleChart'),
       config

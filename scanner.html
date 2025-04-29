@@ -6,7 +6,7 @@
   <title>EcoBin – Scanner</title>
   <link rel="stylesheet" href="css/styles.css" />
   <style>
-    /* camera styling */
+    
     #video {
       width: 100%;
       max-width: 400px;
@@ -26,7 +26,7 @@
       width: 100%;
       max-width: 400px;
     }
-    /* hidden canvas for capture */
+    
     #captureCanvas {
       display: none;
     }
@@ -57,7 +57,7 @@
       const canvas   = document.getElementById('captureCanvas');
       const ctx      = canvas.getContext('2d');
 
-      // 1. Start camera
+      
       try {
         const stream = await navigator.mediaDevices.getUserMedia({
           video: { facingMode: 'environment' }
@@ -70,7 +70,7 @@
         return;
       }
 
-      // 2. Prepare barcode detector (optional)
+      
       let detector = null;
       if ('BarcodeDetector' in window) {
         detector = new BarcodeDetector({
@@ -78,18 +78,18 @@
         });
       }
 
-      // 3. On click: capture image, scan if possible, stop camera, redirect
+     
       button.addEventListener('click', async () => {
         statusEl.textContent = 'Processing…';
 
-        // capture the current frame
+       
         canvas.width  = video.videoWidth;
         canvas.height = video.videoHeight;
         ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
         const imageData = canvas.toDataURL('image/png');
         sessionStorage.setItem('capturedImage', imageData);
 
-        // attempt barcode scan if supported
+       
         if (detector) {
           try {
             const barcodes = await detector.detect(video);
@@ -101,10 +101,10 @@
           }
         }
 
-        // stop camera tracks
+        
         video.srcObject.getTracks().forEach(t => t.stop());
 
-        // go to confirm screen
+       
         window.location = 'scanner-confirm.html';
       });
     })();

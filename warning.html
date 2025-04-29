@@ -14,7 +14,7 @@
   <main style="max-width:600px; margin:0 auto; padding:1rem;">
     <div class="highlight" style="text-align:center;">
       <h2>Good News! We Have Your Device</h2>
-      <!-- now dynamic -->
+      
       <img
         id="device-photo"
         src="assets/device-placeholder.png"
@@ -45,13 +45,13 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      // Load the data URL you stored on the scanner page
+      
       const dataUrl = sessionStorage.getItem('capturedImage');
       if (dataUrl) {
         document.getElementById('device-photo').src = dataUrl;
       }
 
-      // Load the model string
+      
       const model = sessionStorage.getItem('deviceModel');
       if (model) {
         document.getElementById('device-model').textContent = model;

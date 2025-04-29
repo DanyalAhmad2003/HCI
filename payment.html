@@ -6,7 +6,6 @@
   <title>EcoBin – Payment</title>
   <link rel="stylesheet" href="css/styles.css" />
   <style>
-    /* Form tweaks */
     form#payment-form {
       display: flex;
       flex-direction: column;
@@ -31,7 +30,6 @@
   </style>
 </head>
 <body>
-  <!-- Glowing header -->
   <div class="glow-box" style="margin-top:2rem;">
     <header><h1>EcoBin Business</h1></header>
   </div>
@@ -76,7 +74,6 @@
   <script>
     document.getElementById('payment-form').addEventListener('submit', function(e) {
       e.preventDefault();
-      // In a real app you'd send to your payment API here.
       this.style.display = 'none';
       document.getElementById('payment-success').style.display = 'block';
     });
