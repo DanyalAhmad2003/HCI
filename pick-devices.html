@@ -14,7 +14,7 @@
       <button class="btn" onclick="selectComputer('2020 MacBook M4')">
         2020 MacBook M4
       </button>
-      <button class="btn" onclick="selectPhone('Samsung 65in 4K TV')">
+      <button class="btn" onclick="selectTV('Samsung 65in 4K TV')">
         Samsung 65″ 4K TV
       </button>
       <button class="btn" onclick="selectPhone('iPhone 13 Pro Max')">
@@ -39,6 +39,12 @@
       sessionStorage.setItem('repairDevice', deviceName);
       // go to step 1 of the guide
       location.href = 'repair-step-computer-step1.html';
+    }
+    function selectTV(deviceName) {
+      // store for later if needed
+      sessionStorage.setItem('repairDevice', deviceName);
+      // go to step 1 of the guide
+      location.href = 'repair-step-tv-step1.html';
     }
   </script>
 </body>
