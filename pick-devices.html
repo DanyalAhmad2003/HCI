@@ -20,7 +20,7 @@
       <button class="btn" onclick="selectPhone('iPhone 13 Pro Max')">
         iPhone 13 Pro Max
       </button>
-      <button class="btn" onclick="selectPhone('RX7 Electric Hyper Scooter')">
+      <button class="btn" onclick="selectScotter('RX7 Electric Hyper Scooter')">
         RX7 Electric Hyper Scooter
       </button>
     </div>
@@ -45,6 +45,12 @@
       sessionStorage.setItem('repairDevice', deviceName);
       // go to step 1 of the guide
       location.href = 'repair-step-tv-step1.html';
+    }
+    function selectScotter(deviceName) {
+      // store for later if needed
+      sessionStorage.setItem('repairDevice', deviceName);
+      // go to step 1 of the guide
+      location.href = 'repair-step-scotter-step1.html';
     }
   </script>
 </body>
