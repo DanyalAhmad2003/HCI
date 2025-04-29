@@ -11,7 +11,11 @@
 
   <main>
     <div class="highlight">
-      <p>Your rewards balance: <strong>7,440 points</strong></p>
+      <p>Your rewards balance: <strong id="balance">7,440 points</strong></p>
+
+      <!-- Error message placeholder -->
+      <p id="error-msg" style="color: #FFC107; margin: 0.5rem 0;"></p>
+
       <div class="menu">
         <button class="btn reward-item"
                 data-name="Apple App Store $10 Gift Card"
@@ -40,14 +44,29 @@
   <a href="index.html" class="back-btn">← Back to Menu</a>
 
   <script>
+    // parse the numeric balance from the page
+    const balanceText = document.getElementById('balance').textContent;
+    const balance     = parseInt(balanceText.replace(/[^0-9]/g, ''), 10);
+
     document.querySelectorAll('.reward-item').forEach(btn => {
       btn.addEventListener('click', () => {
-        // store selection
+        const cost = parseInt(btn.dataset.cost, 10);
+        const err  = document.getElementById('error-msg');
+
+        if (cost > balance) {
+          // show error, don’t navigate
+          err.textContent = 'Sorry, you need more points to redeem that reward.';
+          return;
+        }
+
+        // clear any previous error
+        err.textContent = '';
+
+        // save selection and navigate
         sessionStorage.setItem('selName', btn.dataset.name);
         sessionStorage.setItem('selCost', btn.dataset.cost);
         sessionStorage.setItem('selCode', btn.dataset.code);
-        // go to confirmation
-        location.href = 'rewards-confirm.html';
+        window.location = 'rewards-confirm.html';
       });
     });
   </script>
