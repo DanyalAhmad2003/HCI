@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>EcoBin – Locations</title>
-  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/styles.css" />
   <style>
     #centers {
       display: grid;
@@ -20,14 +20,13 @@
       padding: 1rem;
       color: #fff;
       text-align: center;
+      transition: box-shadow .3s, border-color .3s;
     }
-    .center-card img {
-      width: 100%;
-      height: 180px;
-      object-fit: cover;
-      border-radius: .5rem;
-      margin-bottom: .75rem;
-      background: #222;
+    .center-card:hover {
+      border-color: gold;
+      box-shadow:
+        0 0 12px gold,
+        0 0 24px gold;
     }
     .center-card h3 {
       margin: .5rem 0;
@@ -51,6 +50,7 @@
       border: none;
       border-radius: .25rem;
       cursor: pointer;
+      transition: background .2s;
     }
     .page-btn:disabled {
       background: #550000;
@@ -78,69 +78,34 @@
   </main>
 
   <script>
-    // Sample centers with Wikipedia article titles
     const centers = [
-      { name:"Goodwill Donation Center",    addr:"1650 S Milledge Ave, Athens, GA",    wiki:"Goodwill" },
-      { name:"Salvation Army Family Store",  addr:"593 S Lumpkin St, Athens, GA",       wiki:"The Salvation Army" },
-      { name:"Habitat for Humanity ReStore", addr:"1930 Epps Bridge Pkwy, Athens, GA",  wiki:"Habitat for Humanity" },
-      { name:"Athens-Clarke Landfill",       addr:"140 Colham Ferry Rd, Bishop, GA",     wiki:"Landfill" },
-      { name:"Emory University Recycling",   addr:"1762 Clifton Rd, Atlanta, GA",        wiki:"Emory University" },
-      { name:"The Arc Recycle Store",        addr:"1690 Hog Mountain Rd, Bishop, GA",    wiki:"The Arc (non-profit organization)" },
-      { name:"Habersham Recycling Center",   addr:"347 Chestnut St, Clarkesville, GA",   wiki:"Recycling" },
-      { name:"Oconee Recycling Center",      addr:"150 Yarbrough Dr, Watkinsville, GA",  wiki:"Recycling" },
-      { name:"Cobb County Recycling",        addr:"1100 Cobb Pl Blvd, Kennesaw, GA",     wiki:"Recycling" },
-      { name:"Chatham County Recycling",     addr:"4115 Montgomery St, Savannah, GA",    wiki:"Recycling" }
+      { name:"Goodwill Donation Center",    addr:"1650 S Milledge Ave, Athens, GA" },
+      { name:"Salvation Army Family Store",  addr:"593 S Lumpkin St, Athens, GA" },
+      { name:"Habitat for Humanity ReStore", addr:"1930 Epps Bridge Pkwy, Athens, GA" },
+      { name:"Athens-Clarke County Landfill",addr:"140 Colham Ferry Rd, Bishop, GA" },
+      { name:"Emory University Recycling",   addr:"1762 Clifton Rd, Atlanta, GA" },
+      { name:"The Arc Recycle Store",        addr:"1690 Hog Mountain Rd, Bishop, GA" },
+      { name:"Habersham County Recycling",   addr:"347 Chestnut St, Clarkesville, GA" },
+      { name:"Oconee County Recycling",      addr:"150 Yarbrough Dr, Watkinsville, GA" },
+      { name:"Cobb County Recycling",        addr:"1100 Cobb Pl Blvd, Kennesaw, GA" },
+      { name:"Chatham County Recycling",     addr:"4115 Montgomery St, Savannah, GA" }
     ];
 
     const perPage = 5;
     let page = 1;
+
     const centersEl = document.getElementById("centers");
     const infoEl    = document.getElementById("page-info");
     const prevBtn   = document.getElementById("prev");
     const nextBtn   = document.getElementById("next");
 
-    // Fallback symbol URL from Wikimedia
-    const fallbackImg = 
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Recycling_symbol_3d.png/300px-Recycling_symbol_3d.png";
-
-    // Build Wikipedia thumbnail query URL
-    function wikiThumbURL(title) {
-      const url = new URL("https://en.wikipedia.org/w/api.php");
-      url.search = new URLSearchParams({
-        action: "query",
-        prop: "pageimages",
-        format: "json",
-        origin: "*",
-        titles: title,
-        pithumbsize: 300
-      });
-      return url;
-    }
-
-    async function render() {
+    function render() {
       centersEl.innerHTML = "";
       const total = Math.ceil(centers.length / perPage);
       const start = (page - 1) * perPage;
-      const slice = centers.slice(start, start + perPage);
-
-      await Promise.all(slice.map(async c => {
+      centers.slice(start, start + perPage).forEach(c => {
         const card = document.createElement("div");
         card.className = "center-card";
-
-        const img = document.createElement("img");
-        card.appendChild(img);
-
-        // Try fetching Wikipedia thumbnail
-        try {
-          const res = await fetch(wikiThumbURL(c.wiki));
-          const js  = await res.json();
-          const pages = js.query.pages;
-          const pageId = Object.keys(pages)[0];
-          const thumb = pages[pageId].thumbnail;
-          img.src = thumb ? thumb.source : fallbackImg;
-        } catch {
-          img.src = fallbackImg;
-        }
 
         const h3 = document.createElement("h3");
         h3.textContent = c.name;
@@ -151,19 +116,27 @@
         card.appendChild(p);
 
         centersEl.appendChild(card);
-      }));
+      });
 
       infoEl.textContent = `Page ${page} of ${total}`;
       prevBtn.disabled = page === 1;
       nextBtn.disabled = page === total;
     }
 
-    prevBtn.onclick = () => { if (page > 1) { page--; render(); } };
-    nextBtn.onclick = () => {
-      if (page < Math.ceil(centers.length / perPage)) { page++; render(); }
-    };
+    prevBtn.addEventListener("click", () => {
+      if (page > 1) {
+        page--;
+        render();
+      }
+    });
+    nextBtn.addEventListener("click", () => {
+      if (page < Math.ceil(centers.length / perPage)) {
+        page++;
+        render();
+      }
+    });
 
-    // kick off
+    // initial draw
     render();
   </script>
 </body>
