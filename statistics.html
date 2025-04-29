@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>EcoBin – Statistics</title>
+  <link rel="stylesheet" href="css/styles.css" />
+
+  <!-- Chart.js for the bar chart -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    /* quick tweaks for this page */
+    .stats-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1rem;
+      margin: 1rem 0;
+    }
+    .card {
+      background: #111;
+      border: 2px solid #C8102E;
+      border-radius: 0.5rem;
+      padding: 1rem;
+      text-align: center;
+      color: #fff;
+    }
+    .card h3 {
+      margin-bottom: 0.5rem;
+      font-size: 1.25rem;
+      color: #C8102E;
+    }
+    .card p {
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+    canvas {
+      max-width: 600px;
+      margin: 1rem auto;
+    }
+  </style>
+</head>
+<body>
+  <!-- page header -->
+  <div class="glow-box" style="margin-top:2rem;">
+    <header><h1>EcoBin Business</h1></header>
+  </div>
+
+  <main style="max-width:800px; margin:0 auto; padding:1rem;">
+    <div class="highlight">
+      <h2>Statistics</h2>
+
+      <!-- KPI cards -->
+      <div class="stats-cards">
+        <div class="card">
+          <h3>Devices Recycled</h3>
+          <p>1,234</p>
+        </div>
+        <div class="card">
+          <h3>Points Awarded</h3>
+          <p>56,700</p>
+        </div>
+        <div class="card">
+          <h3>Materials Processed</h3>
+          <p>789 kg</p>
+        </div>
+        <div class="card">
+          <h3>Active Businesses</h3>
+          <p>42</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bar chart -->
+    <div class="highlight" style="text-align:center;">
+      <h3>Recycled Devices by Category</h3>
+      <canvas id="recycleChart"></canvas>
+    </div>
+
+    <!-- Next/Back controls -->
+    <button class="btn" style="margin-top:1rem;" onclick="location.href='business.html'">
+      ← Back to Business
+    </button>
+  </main>
+
+  <script>
+    // sample data
+    const data = {
+      labels: ['Phones','Laptops','Tablets','Cameras','Others'],
+      datasets: [{
+        label: 'Units Recycled',
+        data: [450, 300, 150, 100, 234],
+        backgroundColor: 'rgba(200,16,46,0.8)',
+        borderColor: '#C8102E',
+        borderWidth: 1
+      }]
+    };
+
+    const config = {
+      type: 'bar',
+      data: data,
+      options: {
+        scales: {
+          y: { 
+            beginAtZero: true,
+            ticks: { color: '#fff' }
+          },
+          x: {
+            ticks: { color: '#fff' }
+          }
+        },
+        plugins: {
+          legend: { labels: { color: '#fff' } },
+          tooltip: { 
+            titleColor: '#000', 
+            bodyColor: '#000',
+            backgroundColor: '#C8102E'
+          }
+        }
+      }
+    };
+
+    // render chart
+    new Chart(
+      document.getElementById('recycleChart'),
+      config
+    );
+  </script>
+</body>
+</html>

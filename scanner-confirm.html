@@ -5,41 +5,57 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>EcoBin – Confirmation</title>
   <link rel="stylesheet" href="css/styles.css" />
+  <style>
+    #captured-img {
+      width: 100%;
+      max-width: 400px;
+      border-radius: 0.75rem;
+      box-shadow:
+        0 0 8px rgba(200,16,46,0.6),
+        0 0 16px rgba(200,16,46,0.4);
+      display: block;
+      margin: 1rem auto;
+    }
+    #code-display {
+      color: #C8102E;
+      margin-top: 0.5rem;
+      font-weight: bold;
+    }
+  </style>
 </head>
 <body>
   <div class="glow-box">
     <header><h1>EcoBin</h1></header>
   </div>
 
-  <main>
-    <div class="highlight" style="text-align:center;">
-      <h2>Good News! We Have Your Device</h2>
-      <img
-        src="assets/device-image.png"
-        alt="Scanned Device"
-        style="width:200px;margin:1rem 0;"
-      />
-      <p><strong>HP Victus 15-fa0000</strong></p>
-    </div>
-
+  <main style="text-align:center;">
     <div class="highlight">
-      <h3 style="color:#C8102E;">Warning!!!</h3>
-      <p>
-        • Batteries contain corrosive chemicals.  
-        • Circuit boards may hold residual charge—wear gloves.  
-        • Take care removing the battery; do not puncture.  
-        • Recycle glass screens with proper PPE.  
-      </p>
+      <h2>Here’s the photo you just took:</h2>
+      <img id="captured-img" alt="Captured photo" />
+      <p id="code-display"></p>
     </div>
 
-    <button
-      class="btn"
-      onclick="location.href='scanner-nearby.html'"
-    >
+    <!-- updated to go to warning.html instead of scanner-nearby.html -->
+    <button class="btn" onclick="location.href='warning.html'">
       Next →
     </button>
   </main>
 
-  <a href="scanner.html" class="back-btn">← Back</a>
+  <a href="scanner.html" class="back-btn">← Retake</a>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const imgData = sessionStorage.getItem('capturedImage');
+      if (imgData) {
+        document.getElementById('captured-img').src = imgData;
+      }
+
+      const code = sessionStorage.getItem('scannedCode');
+      if (code) {
+        document.getElementById('code-display').textContent =
+          'Scanned code: ' + code;
+      }
+    });
+  </script>
 </body>
 </html>

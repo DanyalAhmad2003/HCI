@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>EcoBin – Payment</title>
+  <link rel="stylesheet" href="css/styles.css" />
+  <style>
+    /* Form tweaks */
+    form#payment-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    form#payment-form label {
+      display: flex;
+      flex-direction: column;
+      color: #fff;
+      font-weight: bold;
+    }
+    form#payment-form input {
+      margin-top: 0.25rem;
+      padding: 0.5rem;
+    }
+    #payment-success {
+      display: none;
+      text-align: center;
+      color: #fff;
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <!-- Glowing header -->
+  <div class="glow-box" style="margin-top:2rem;">
+    <header><h1>EcoBin Business</h1></header>
+  </div>
+
+  <main style="max-width:600px; margin:0 auto; padding:1rem;">
+    <div class="highlight">
+      <h2>Payment</h2>
+      <form id="payment-form">
+        <label>
+          Cardholder Name
+          <input type="text" name="cardName" placeholder="Jane Doe" required />
+        </label>
+        <label>
+          Card Number
+          <input type="text" name="cardNumber" placeholder="•••• •••• •••• ••••" maxlength="19" required />
+        </label>
+        <div style="display:flex; gap:1rem;">
+          <label style="flex:1;">
+            Expiration Date
+            <input type="text" name="expiry" placeholder="MM/YY" maxlength="5" required />
+          </label>
+          <label style="flex:1;">
+            CVV
+            <input type="password" name="cvv" placeholder="•••" maxlength="4" required />
+          </label>
+        </div>
+        <label>
+          Amount (USD)
+          <input type="number" name="amount" placeholder="50.00" step="0.01" required />
+        </label>
+        <button type="submit" class="btn">Pay Now</button>
+      </form>
+
+      <p id="payment-success">
+        🎉 Payment successful! Thank you for your support.
+      </p>
+    </div>
+
+    <a href="business.html" class="back-btn">← Back to Business</a>
+  </main>
+
+  <script>
+    document.getElementById('payment-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      // In a real app you'd send to your payment API here.
+      this.style.display = 'none';
+      document.getElementById('payment-success').style.display = 'block';
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>EcoBin – Nearby Recycling</title>
+  <link rel="stylesheet" href="css/styles.css" />
+  <style>
+    #status {
+      margin: 1rem 0;
+      color: #fff;
+      text-align: center;
+    }
+    ul#locations {
+      list-style: none;
+      padding: 0;
+      margin: 1rem 0;
+    }
+    ul#locations li {
+      background: #111;
+      border-left: 4px solid #C8102E;
+      padding: .75rem;
+      margin-bottom: .5rem;
+      border-radius: .25rem;
+      color: #fff;
+    }
+    .addr {
+      display: block;
+      font-size: 0.85rem;
+      color: #bbb;
+      margin-top: 0.25rem;
+    }
+    /* pagination controls */
+    #pagination {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem;
+      margin: 1rem 0;
+    }
+    .btn-inline {
+      background: #C8102E;
+      color: #fff;
+      padding: .5rem 1rem;
+      border-radius: .25rem;
+      cursor: pointer;
+      transition: background .2s;
+    }
+    .btn-inline:disabled {
+      background: #550000;
+      cursor: default;
+    }
+    #page-info {
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <div class="glow-box">
+    <header><h1>EcoBin</h1></header>
+  </div>
+
+  <main>
+    <div class="highlight">
+      <h2>Nearby Recycling</h2>
+      <p id="status">Locating you…</p>
+      <ul id="locations"></ul>
+
+      <div id="pagination" style="display:none;">
+        <button id="prev-page" class="btn-inline">Prev</button>
+        <span id="page-info"></span>
+        <button id="next-page" class="btn-inline">Next</button>
+      </div>
+    </div>
+
+    <!-- Wizard Next button -->
+    <button class="btn" onclick="location.href='components.html'">
+      Next →
+    </button>
+  </main>
+
+  <a href="warning.html" class="back-btn">← Back</a>
+
+  <script>
+    let sites = [];
+    const perPage = 10;
+    let currentPage = 1;
+
+    // Geolocate
+    if (!navigator.geolocation) {
+      updateStatus('Geolocation not supported.');
+    } else {
+      navigator.geolocation.getCurrentPosition(onGeoSuccess, () => {
+        updateStatus('Unable to get your location.');
+      });
+    }
+
+    function updateStatus(msg) {
+      document.getElementById('status').textContent = msg;
+    }
+
+    function onGeoSuccess(pos) {
+      const { latitude: lat, longitude: lon } = pos.coords;
+      updateStatus('Fetching nearby recycling…');
+      fetchRecycling(lat, lon);
+    }
+
+    // Fetch Overpass
+    async function fetchRecycling(lat, lon) {
+      const radius = 160934; // 100 miles in metres
+      const query = `
+[out:json][timeout:25];
+node(around:${radius},${lat},${lon})[amenity=recycling];
+out tags;`;
+
+      try {
+        const res  = await fetch('https://overpass-api.de/api/interpreter?data='
+                                + encodeURIComponent(query));
+        const data = await res.json();
+        sites = data.elements;
+        if (!sites.length) {
+          updateStatus('No recycling sites found within 100 miles.');
+          return;
+        }
+        updateStatus('');
+        setupPagination();
+      } catch {
+        updateStatus('Error fetching data.');
+      }
+    }
+
+    // Pagination setup
+    function setupPagination() {
+      const totalPages = Math.ceil(sites.length / perPage);
+      const pagDiv     = document.getElementById('pagination');
+      const prevBtn    = document.getElementById('prev-page');
+      const nextBtn    = document.getElementById('next-page');
+      const info       = document.getElementById('page-info');
+
+      pagDiv.style.display = 'flex';
+
+      prevBtn.addEventListener('click', () => {
+        if (currentPage > 1) {
+          currentPage--;
+          renderPage();
+        }
+      });
+      nextBtn.addEventListener('click', () => {
+        if (currentPage < totalPages) {
+          currentPage++;
+          renderPage();
+        }
+      });
+
+      renderPage();
+    }
+
+    // Render one page of results
+    function renderPage() {
+      const ul = document.getElementById('locations');
+      ul.innerHTML = '';
+
+      const totalPages = Math.ceil(sites.length / perPage);
+      const start = (currentPage - 1) * perPage;
+      const end   = start + perPage;
+      const pageSites = sites.slice(start, end);
+
+      pageSites.forEach((el, idx) => {
+        const li   = document.createElement('li');
+        const name = el.tags.name || 'Recycling site';
+        li.textContent = name;
+
+        // show any addr:* tags
+        const parts = [];
+        ['housenumber','street','city','postcode','country']
+          .forEach(k => {
+            if (el.tags['addr:' + k]) {
+              parts.push(el.tags['addr:' + k]);
+            }
+          });
+        if (parts.length) {
+          const addr = document.createElement('span');
+          addr.className = 'addr';
+          addr.textContent = parts.join(', ');
+          li.appendChild(addr);
+        }
+
+        ul.appendChild(li);
+      });
+
+      // update pagination controls
+      document.getElementById('page-info').textContent =
+        `Page ${currentPage} of ${totalPages}`;
+      document.getElementById('prev-page').disabled = currentPage === 1;
+      document.getElementById('next-page').disabled = currentPage === totalPages;
+    }
+  </script>
+</body>
+</html>

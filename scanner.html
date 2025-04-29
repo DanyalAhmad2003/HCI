@@ -5,30 +5,109 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>EcoBin – Scanner</title>
   <link rel="stylesheet" href="css/styles.css" />
+  <style>
+    /* camera styling */
+    #video {
+      width: 100%;
+      max-width: 400px;
+      border-radius: 0.75rem;
+      box-shadow:
+        0 0 8px rgba(200,16,46,0.6),
+        0 0 16px rgba(200,16,46,0.4);
+      background: #000;
+    }
+    .scan-status {
+      margin-top: 0.5rem;
+      font-size: 0.9rem;
+      color: #fff;
+    }
+    #take-photo {
+      margin-top: 1rem;
+      width: 100%;
+      max-width: 400px;
+    }
+    /* hidden canvas for capture */
+    #captureCanvas {
+      display: none;
+    }
+  </style>
 </head>
 <body>
   <div class="glow-box">
     <header><h1>EcoBin Scanner</h1></header>
   </div>
 
-  <main>
-    <div class="highlight" style="text-align:center;">
-      <p>📷 Camera Preview (placeholder)</p>
-      <img
-        src="assets/camera-placeholder.png"
-        alt="Camera app placeholder"
-        style="width:100%;max-width:400px;border-radius:.5rem;box-shadow:0 0 8px rgba(0,0,0,0.4);"
-      />
-      <button
-        class="btn"
-        style="margin-top:1rem;"
-        onclick="location.href='scanner-confirm.html'"
-      >
-        Scan Device
-      </button>
+  <main style="text-align:center;">
+    <div class="highlight">
+      <video id="video" autoplay muted playsinline></video>
+      <p class="scan-status" id="status">Initializing camera…</p>
+      <button class="btn" id="take-photo">Take Picture</button>
     </div>
   </main>
 
+  <canvas id="captureCanvas"></canvas>
+
   <a href="index.html" class="back-btn">← Back to Menu</a>
+
+  <script>
+    (async () => {
+      const statusEl = document.getElementById('status');
+      const video    = document.getElementById('video');
+      const button   = document.getElementById('take-photo');
+      const canvas   = document.getElementById('captureCanvas');
+      const ctx      = canvas.getContext('2d');
+
+      // 1. Start camera
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({
+          video: { facingMode: 'environment' }
+        });
+        video.srcObject = stream;
+        statusEl.textContent = 'Point camera & tap “Take Picture”';
+      } catch (err) {
+        statusEl.textContent = '❌ Camera access denied';
+        console.error(err);
+        return;
+      }
+
+      // 2. Prepare barcode detector (optional)
+      let detector = null;
+      if ('BarcodeDetector' in window) {
+        detector = new BarcodeDetector({
+          formats: ['ean_13','code_128','qr_code']
+        });
+      }
+
+      // 3. On click: capture image, scan if possible, stop camera, redirect
+      button.addEventListener('click', async () => {
+        statusEl.textContent = 'Processing…';
+
+        // capture the current frame
+        canvas.width  = video.videoWidth;
+        canvas.height = video.videoHeight;
+        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+        const imageData = canvas.toDataURL('image/png');
+        sessionStorage.setItem('capturedImage', imageData);
+
+        // attempt barcode scan if supported
+        if (detector) {
+          try {
+            const barcodes = await detector.detect(video);
+            if (barcodes.length) {
+              sessionStorage.setItem('scannedCode', barcodes[0].rawValue);
+            }
+          } catch (e) {
+            console.warn('Barcode scan failed:', e);
+          }
+        }
+
+        // stop camera tracks
+        video.srcObject.getTracks().forEach(t => t.stop());
+
+        // go to confirm screen
+        window.location = 'scanner-confirm.html';
+      });
+    })();
+  </script>
 </body>
 </html>
