@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>EcoBin – Warning</title>
+  <title>EcoBin – Device Confirmation</title>
   <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
@@ -11,21 +11,23 @@
     <header><h1>EcoBin</h1></header>
   </div>
 
-  <main>
+  <main style="max-width:600px; margin:0 auto; padding:1rem;">
     <div class="highlight" style="text-align:center;">
       <h2>Good News! We Have Your Device</h2>
-      <!-- generic placeholder image -->
+      <!-- now dynamic -->
       <img
+        id="device-photo"
         src="assets/device-placeholder.png"
         alt="Your Device"
-        style="width:200px; margin:1rem auto; display:block;"
+        style="width:200px; margin:1rem auto; display:block; border-radius:0.75rem;
+               box-shadow:0 0 8px rgba(200,16,46,0.6),0 0 16px rgba(200,16,46,0.4);"
       />
-      <p><strong>Your Device Model</strong></p>
+      <p><strong id="device-model">Your Device Model</strong></p>
     </div>
 
     <div class="highlight">
       <h3 style="color:#C8102E;">Warning!!!</h3>
-      <ul>
+      <ul style="color:#fff; list-style:disc inside; text-align:left;">
         <li>🔋 Always remove the battery before recycling.</li>
         <li>🖥️ Handle screens and glass with care to avoid cuts.</li>
         <li>⚙️ Circuit boards may hold charge—wear protective gloves.</li>
@@ -36,8 +38,25 @@
     <button class="btn" onclick="location.href='nearby.html'">
       Next →
     </button>
+    <a href="scanner.html" class="back-btn" style="display:inline-block; margin-top:0.5rem;">
+      ← Back
+    </a>
   </main>
 
-  <a href="scanner-confirm.html" class="back-btn">← Back</a>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Load the data URL you stored on the scanner page
+      const dataUrl = sessionStorage.getItem('capturedImage');
+      if (dataUrl) {
+        document.getElementById('device-photo').src = dataUrl;
+      }
+
+      // Load the model string
+      const model = sessionStorage.getItem('deviceModel');
+      if (model) {
+        document.getElementById('device-model').textContent = model;
+      }
+    });
+  </script>
 </body>
 </html>
