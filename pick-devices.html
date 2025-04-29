@@ -11,16 +11,16 @@
   <main>
     <p style="margin-bottom:1rem;">Select your recent device you recycled to repair:</p>
     <div class="menu">
-      <button class="btn" onclick="select('2020 MacBook M4')">
+      <button class="btn" onclick="selectComputer('2020 MacBook M4')">
         2020 MacBook M4
       </button>
-      <button class="btn" onclick="select('Samsung 65in 4K TV')">
+      <button class="btn" onclick="selectPhone('Samsung 65in 4K TV')">
         Samsung 65″ 4K TV
       </button>
-      <button class="btn" onclick="select('iPhone 13 Pro Max')">
+      <button class="btn" onclick="selectPhone('iPhone 13 Pro Max')">
         iPhone 13 Pro Max
       </button>
-      <button class="btn" onclick="select('RX7 Electric Hyper Scooter')">
+      <button class="btn" onclick="selectPhone('RX7 Electric Hyper Scooter')">
         RX7 Electric Hyper Scooter
       </button>
     </div>
@@ -28,11 +28,17 @@
   <a href="info.html" class="back-btn">← Back</a>
 
   <script>
-    function select(deviceName) {
+    function selectPhone(deviceName) {
       // store for later if needed
       sessionStorage.setItem('repairDevice', deviceName);
       // go to step 1 of the guide
       location.href = 'repair-step1.html';
+    }
+    function selectComputer(deviceName) {
+      // store for later if needed
+      sessionStorage.setItem('repairDevice', deviceName);
+      // go to step 1 of the guide
+      location.href = 'repair-step-computer-step1.html';
     }
   </script>
 </body>
