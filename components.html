@@ -5,40 +5,46 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>EcoBin – Key Components</title>
   <link rel="stylesheet" href="css/styles.css" />
+  <style>
+    .components-list {
+      list-style: none;
+      padding: 0;
+      margin: 1rem 0;
+    }
+    .components-list li {
+      padding: 0.5rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      font-size: 1rem;
+      color: #fff;
+    }
+    .components-list li:last-child {
+      border-bottom: none;
+    }
+  </style>
 </head>
 <body>
-  <div class="glow-box">
-    <header><h1>EcoBin</h1></header>
+  <!-- glowing header -->
+  <div class="glow-box" style="margin-top:2rem;">
+    <header><h1>EcoBin Business</h1></header>
   </div>
 
-  <main>
+  <main style="max-width:600px; margin:0 auto; padding:1rem;">
     <div class="highlight">
       <h2>Key Components</h2>
-      <ul style="list-style:none; padding:0; margin:0;">
-        <li style="display:flex; align-items:center; margin:.75rem 0;">
-          <img src="assets/component-battery.png" alt="Battery" style="width:40px; margin-right:1rem;" />
-          Battery Pack
-        </li>
-        <li style="display:flex; align-items:center; margin:.75rem 0;">
-          <img src="assets/component-board.png" alt="Logic Board" style="width:40px; margin-right:1rem;" />
-          Logic Board
-        </li>
-        <li style="display:flex; align-items:center; margin:.75rem 0;">
-          <img src="assets/component-ssd.png" alt="SSD" style="width:40px; margin-right:1rem;" />
-          SSD Module
-        </li>
-        <li style="display:flex; align-items:center; margin:.75rem 0;">
-          <img src="assets/component-display.png" alt="Display" style="width:40px; margin-right:1rem;" />
-          Display Assembly
-        </li>
+      <ul class="components-list">
+        <li>Battery Pack</li>
+        <li>Logic Board</li>
+        <li>SSD Module</li>
+        <li>Display Assembly</li>
       </ul>
     </div>
 
     <button class="btn" onclick="location.href='index.html'">
       Finish
     </button>
+    <a href="nearby.html" class="back-btn" style="margin-top:0.5rem; display:inline-block;">
+      ← Back
+    </a>
   </main>
-
-  <a href="nearby.html" class="back-btn">← Back</a>
 </body>
 </html>
