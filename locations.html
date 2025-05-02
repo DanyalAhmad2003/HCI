@@ -8,17 +8,17 @@
   <style>
     #centers {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px,1fr));
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       gap: 1rem;
       margin: 1rem 0;
     }
     .center-card {
-      background: rgba(0,0,0,0.6);
-      border: 2px solid #C8102E;
-      border-radius: .75rem;
-      box-shadow: 0 0 8px rgba(200,16,46,.6), 0 0 16px rgba(200,16,46,.4);
+      background: #adc1b0; /* Match the greenish background from styles.css */
+      border: 2px solid #000; /* Changed border to black */
+      border-radius: 0.75rem;
+      box-shadow: 0 0 8px rgba(0, 0, 0, 0.6), 0 0 16px rgba(0, 0, 0, 0.4); /* Match black shadow */
       padding: 1rem;
-      color: #fff;
+      color: #000; /* Changed text color to black */
       text-align: center;
       transition:
         transform 0.2s ease,
@@ -28,18 +28,19 @@
     }
     .center-card:hover {
       transform: translateY(-8px) scale(1.03);
-      border-color: gold;
+      border-color: #619cf5; /* Slightly darker shade of the blue used in styles.css */
       box-shadow:
-        0 4px 16px rgba(255,215,0,0.6),
-        0 8px 32px rgba(255,215,0,0.4);
+        0 4px 16px rgba(97, 156, 245, 0.6), /* Match blue hover shadow */
+        0 8px 32px rgba(97, 156, 245, 0.4);
     }
     .center-card h3 {
-      margin: .5rem 0;
-      color: #C8102E;
+      margin: 0.5rem 0;
+      color: #000; /* Changed heading color to black */
     }
     .center-card p {
-      margin: .25rem 0;
-      font-size: .9rem;
+      margin: 0.25rem 0;
+      font-size: 0.9rem;
+      color: #000; /* Changed paragraph text color to black */
     }
     #pagination {
       display: flex;
@@ -49,19 +50,21 @@
       margin: 1rem 0;
     }
     .page-btn {
-      background: #C8102E;
-      color: #fff;
-      padding: .5rem 1rem;
+      background: #619cf5; /* Match blue button background */
+      color: #000; /* Changed text color to black */
+      padding: 0.5rem 1rem;
       border: none;
-      border-radius: .25rem;
+      border-radius: 0.25rem;
       cursor: pointer;
-      transition: background .2s;
+      transition: background 0.2s;
     }
     .page-btn:disabled {
-      background: #550000;
+      background: #adc1b0; /* Match disabled button background to greenish tone */
       cursor: default;
     }
-    #page-info { color: #fff; }
+    #page-info {
+      color: #000; /* Changed page info text color to black */
+    }
   </style>
 </head>
 <body>
