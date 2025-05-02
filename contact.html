@@ -6,7 +6,7 @@
   <title>EcoBin – Contact</title>
   <link rel="stylesheet" href="css/styles.css" />
   <style>
-    /* small tweaks for the contact form */
+    
     form#contact-form {
       display: flex;
       flex-direction: column;
@@ -64,8 +64,7 @@
   <script>
     document.getElementById('contact-form').addEventListener('submit', function(e) {
       e.preventDefault();
-      // here you could also send to a real endpoint via fetch()
-      // For now we just swap to a thank-you message:
+      
       this.style.display = 'none';
       document.getElementById('thank-you').style.display = 'block';
     });

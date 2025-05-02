@@ -73,7 +73,7 @@
       </div>
     </div>
 
-    <!-- Wizard Next button -->
+    
     <button class="btn" onclick="location.href='components.html'">
       Next →
     </button>
@@ -86,7 +86,7 @@
     const perPage = 10;
     let currentPage = 1;
 
-    // Geolocate
+    
     if (!navigator.geolocation) {
       updateStatus('Geolocation not supported.');
     } else {
@@ -105,9 +105,9 @@
       fetchRecycling(lat, lon);
     }
 
-    // Fetch Overpass
+    
     async function fetchRecycling(lat, lon) {
-      const radius = 160934; // 100 miles in metres
+      const radius = 160934; 
       const query = `
 [out:json][timeout:25];
 node(around:${radius},${lat},${lon})[amenity=recycling];
@@ -129,7 +129,7 @@ out tags;`;
       }
     }
 
-    // Pagination setup
+    
     function setupPagination() {
       const totalPages = Math.ceil(sites.length / perPage);
       const pagDiv     = document.getElementById('pagination');
@@ -155,7 +155,7 @@ out tags;`;
       renderPage();
     }
 
-    // Render one page of results
+   
     function renderPage() {
       const ul = document.getElementById('locations');
       ul.innerHTML = '';
@@ -170,7 +170,7 @@ out tags;`;
         const name = el.tags.name || 'Recycling site';
         li.textContent = name;
 
-        // show any addr:* tags
+       
         const parts = [];
         ['housenumber','street','city','postcode','country']
           .forEach(k => {
@@ -188,7 +188,6 @@ out tags;`;
         ul.appendChild(li);
       });
 
-      // update pagination controls
       document.getElementById('page-info').textContent =
         `Page ${currentPage} of ${totalPages}`;
       document.getElementById('prev-page').disabled = currentPage === 1;
