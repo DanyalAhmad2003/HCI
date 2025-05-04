@@ -6,7 +6,7 @@ Attached to the assignment drop box and to this file is our zipped source code f
 We recommend running it through Visual Studio Code using the "Live Server" extension after it has been downloaded. 
 
 Some of the current limitations in the app include: not displaying an actual workable qr code for earning rewards. Also a generic message with common eletronic parts is 
-displayed when a user scanns their device using the "Scanner" feature. Also, due to the lack of a database feature in the app, adding new deivces to the EcoBin network does
+displayed when a user scanns their device using the "Scanner" feature. Also, due to the lack of a database feature in the app, adding new devices to the EcoBin network does
 not actualy save it when the app reruns. 
 
 
