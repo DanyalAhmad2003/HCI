@@ -9,7 +9,4 @@ Some of the current limitations in the app include: not displaying an actual wor
 displayed regardless of what device a user scanns using the "Scanner" feature. Also, due to the lack of a database feature in the app, adding new devices to the EcoBin network does
 not actualy save it when the app reruns. 
 
-
-To run the code on local host via VsCode install the "Live Server" extension, to be able to go to Go Live local host link. 
-
 [HCIFinalMilestone.zip](https://github.com/user-attachments/files/20025446/HCIFinalMilestone.zip)
