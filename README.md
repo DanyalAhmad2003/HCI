@@ -1,4 +1,4 @@
-Group L Milestone 5
+Group L Milestone 5:
 Danyal Khan, Danyal Ahmad, Mustafa Khan, Andrew Shank, Calvin Chau, Alvin Vasanthakumar
 
 Link to high fidelity prototype hosting website:  https://fantastic-kangaroo-1f2e47.netlify.app/
